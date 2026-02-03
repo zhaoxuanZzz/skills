@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} - Reveal.js 演示文稿</title>
+    
+    <!-- Reveal.js 核心样式 (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css" id="theme">
+    
+    <!-- 代码高亮主题 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           自定义主题配置
+           ======================================== */
+        :root {
+            /* 颜色系统 - 可通过 JavaScript 动态覆盖 */
+            --color-primary: #2E86AB;
+            --color-secondary: #A23B72;
+            --color-accent: #F18F01;
+            --color-background: #0a0a0a;
+            --color-text: #ffffff;
+            --color-text-muted: #cccccc;
+            
+            /* 字体系统 */
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Lora', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            /* 间距 */
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+        
+        /* Reveal.js 全局样式覆盖 */
+        .reveal {
+            font-family: var(--font-body);
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--color-text);
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3, 
+        .reveal h4, .reveal h5, .reveal h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: -0.02em;
+        }
+        
+        .reveal h1 { font-size: 2.8em; line-height: 1.1; }
+        .reveal h2 { font-size: 2em; line-height: 1.2; }
+        .reveal h3 { font-size: 1.5em; line-height: 1.3; }
+        
+        .reveal code {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.1em 0.3em;
+            border-radius: 3px;
+        }
+        
+        .reveal pre code {
+            background: #272822;
+            padding: 1em;
+            border-radius: 8px;
+            max-height: 500px;
+        }
+        
+        .reveal strong {
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+        
+        .reveal em {
+            color: var(--color-primary);
+            font-style: italic;
+        }
+        
+        .reveal a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .reveal a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* ========================================
+           自定义布局类
+           ======================================== */
+        
+        /* 标题幻灯片 */
+        .slide-title {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .slide-title h1 {
+            font-size: 3.5em;
+            margin-bottom: 0.3em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .slide-title .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .slide-title .author {
+            margin-top: 2em;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        /* 内容幻灯片 */
+        .slide-content {
+            text-align: left;
+        }
+        
+        .slide-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .slide-content li {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+            position: relative;
+        }
+        
+        .slide-content li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+        
+        /* 双列布局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            align-items: center;
+        }
+        
+        .two-column > div {
+            padding: 1em;
+        }
+        
+        /* 图片+文本布局 */
+        .image-text {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            align-items: center;
+        }
+        
+        .image-text img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* 引用幻灯片 */
+        .slide-quote {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(46, 134, 171, 0.1), rgba(162, 59, 114, 0.1));
+        }
+        
+        .slide-quote blockquote {
+            font-size: 1.8em;
+            font-style: italic;
+            border-left: 5px solid var(--color-accent);
+            padding-left: 1em;
+            margin: 0;
+            max-width: 80%;
+        }
+        
+        .slide-quote cite {
+            display: block;
+            margin-top: 1em;
+            font-size: 0.7em;
+            opacity: 0.8;
+            font-style: normal;
+        }
+        
+        /* 章节分隔符 */
+        .slide-section {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+        }
+        
+        .slide-section h2 {
+            font-size: 3em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        /* ========================================
+           动画和交互增强
+           ======================================== */
+        
+        /* Fragment 动画样式 */
+        .reveal .fragment.highlight-current-blue {
+            opacity: 1;
+            visibility: inherit;
+        }
+        
+        .reveal .fragment.highlight-current-blue.current-fragment {
+            color: var(--color-primary);
+        }
+        
+        .reveal .fragment.grow {
+            opacity: 1;
+        }
+        
+        .reveal .fragment.grow.visible {
+            transform: scale(1.2);
+        }
+        
+        /* 进度条自定义 */
+        .reveal .progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+        }
+        
+        .reveal .progress span {
+            background: var(--color-accent);
+        }
+        
+        /* 控制按钮自定义 */
+        .reveal .controls {
+            color: var(--color-accent);
+        }
+        
+        /* ========================================
+           响应式设计
+           ======================================== */
+        
+        @media (max-width: 768px) {
+            .reveal {
+                font-size: 24px;
+            }
+            
+            .two-column,
+            .image-text {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide-quote blockquote {
+                font-size: 1.3em;
+            }
+        }
+        
+        /* ========================================
+           演讲者备注样式
+           ======================================== */
+        
+        .reveal aside.notes {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- ========================================
+                 幻灯片内容区域
+                 
+                 使用说明：
+                 1. 每个 <section> 标签代表一张幻灯片
+                 2. 嵌套 <section> 创建垂直幻灯片
+                 3. data-transition 设置转场效果
+                 4. data-background 设置背景
+                 5. class="fragment" 创建渐进显示动画
+                 
+                 示例结构如下，实际使用时替换为你的内容
+                 ======================================== -->
+            
+            <!-- 标题幻灯片 -->
+            <section class="slide-title" data-transition="zoom">
+                <h1>你的演示文稿标题</h1>
+                <p class="subtitle">副标题或描述</p>
+                <p class="author">作者名称 | 日期</p>
+            </section>
+            
+            <!-- 内容幻灯片示例 -->
+            <section class="slide-content">
+                <h2>幻灯片标题</h2>
+                <ul>
+                    <li class="fragment">第一个要点</li>
+                    <li class="fragment">第二个要点</li>
+                    <li class="fragment">第三个要点</li>
+                </ul>
+                
+                <!-- 演讲者备注 (按 S 键查看) -->
+                <aside class="notes">
+                    这里是演讲者备注，只有演讲者能看到。
+                    提供额外的上下文、提醒或详细说明。
+                </aside>
+            </section>
+            
+            <!-- 双列布局示例 -->
+            <section>
+                <h2>双列布局</h2>
+                <div class="two-column">
+                    <div class="fragment">
+                        <h3>左侧内容</h3>
+                        <p>这里是左侧的内容描述。</p>
+                    </div>
+                    <div class="fragment">
+                        <h3>右侧内容</h3>
+                        <p>这里是右侧的内容描述。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 图片+文本示例 -->
+            <section>
+                <div class="image-text">
+                    <div>
+                        <h2>图片展示</h2>
+                        <p>配合文字说明的图片展示效果。</p>
+                        <ul>
+                            <li class="fragment">特点一</li>
+                            <li class="fragment">特点二</li>
+                        </ul>
+                    </div>
+                    <div class="fragment">
+                        <img src="https://via.placeholder.com/600x400" alt="示例图片">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 代码示例 -->
+            <section>
+                <h2>代码示例</h2>
+                <pre><code class="language-javascript" data-trim data-line-numbers="1-3|5-7">
+// JavaScript 代码示例
+function hello(name) {
+    console.log(`Hello, ${name}!`);
+}
+
+// 调用函数
+hello('World');
+                </code></pre>
+            </section>
+            
+            <!-- 引用幻灯片 -->
+            <section class="slide-quote" data-background-gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+                <blockquote>
+                    "这是一段引用文字，用于强调重要观点或名言。"
+                </blockquote>
+                <cite>— 引用来源</cite>
+            </section>
+            
+            <!-- 章节分隔符 -->
+            <section class="slide-section" data-background-gradient="linear-gradient(135deg, #A23B72 0%, #F18F01 100%)">
+                <h2>新章节</h2>
+            </section>
+            
+            <!-- 嵌套幻灯片示例 (向下导航) -->
+            <section>
+                <section>
+                    <h2>垂直导航</h2>
+                    <p>按向下箭头查看更多</p>
+                </section>
+                <section>
+                    <h3>子幻灯片 1</h3>
+                    <p>这是垂直方向的第一张子幻灯片</p>
+                </section>
+                <section>
+                    <h3>子幻灯片 2</h3>
+                    <p>这是垂直方向的第二张子幻灯片</p>
+                </section>
+            </section>
+            
+            <!-- 结束幻灯片 -->
+            <section class="slide-title" data-transition="zoom">
+                <h1>谢谢！</h1>
+                <p class="subtitle">欢迎提问</p>
+            </section>
+            
+        </div>
+    </div>
+
+    <!-- ========================================
+         Reveal.js 核心和插件 (CDN)
+         ======================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/zoom/zoom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/search/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/math/math.js"></script>
+    
+    <script>
+        // ========================================
+        // 演示文稿配置对象
+        // ========================================
+        const PRESENTATION_CONFIG = {
+            // 基本信息
+            title: "你的演示文稿标题",
+            author: "作者名称",
+            date: "2026年2月3日",
+            
+            // 主题配置
+            theme: {
+                primary: "#2E86AB",      // 主色
+                secondary: "#A23B72",    // 次要色
+                accent: "#F18F01",       // 强调色
+                background: "#0a0a0a",   // 背景色
+                text: "#ffffff",         // 文字色
+                textMuted: "#cccccc"     // 次要文字色
+            },
+            
+            // Reveal.js 配置选项
+            // 完整文档: https://revealjs.com/config/
+            revealOptions: {
+                // 显示选项
+                controls: true,              // 显示控制箭头
+                progress: true,              // 显示进度条
+                center: true,                // 幻灯片垂直居中
+                hash: true,                  // URL 中包含幻灯片编号
+                slideNumber: 'c/t',          // 幻灯片编号格式 (当前/总数)
+                
+                // 行为配置
+                transition: 'slide',         // 转场效果: none/fade/slide/convex/concave/zoom
+                transitionSpeed: 'default',  // 转场速度: default/fast/slow
+                backgroundTransition: 'fade', // 背景转场效果
+                
+                // 导航控制
+                embedded: false,             // 是否嵌入模式
+                loop: false,                 // 是否循环播放
+                rtl: false,                  // 是否从右到左
+                navigationMode: 'default',   // 导航模式: default/linear/grid
+                shuffle: false,              // 是否随机顺序
+                
+                // 片段动画
+                fragments: true,             // 启用 fragment
+                fragmentInURL: true,         // URL 中包含 fragment 状态
+                
+                // 键盘和触摸
+                keyboard: true,              // 启用键盘控制
+                touch: true,                 // 启用触摸导航
+                mouseWheel: false,           // 禁用鼠标滚轮导航
+                
+                // 演示者模式
+                showNotes: false,            // 在主窗口显示备注
+                
+                // 自动播放
+                autoSlide: 0,                // 自动播放间隔(毫秒)，0 = 禁用
+                autoSlideStoppable: true,    // 用户操作后停止自动播放
+                
+                // 视图控制
+                overview: true,              // 启用概览模式 (按 ESC)
+                help: true,                  // 启用帮助覆盖层 (按 ?)
+                
+                // 尺寸配置
+                width: 1280,                 // 演示文稿宽度
+                height: 720,                 // 演示文稿高度
+                margin: 0.04,                // 边距
+                minScale: 0.2,               // 最小缩放比例
+                maxScale: 2.0,               // 最大缩放比例
+                
+                // 插件
+                plugins: [ 
+                    RevealMarkdown,
+                    RevealHighlight,
+                    RevealNotes,
+                    RevealZoom,
+                    RevealSearch,
+                    RevealMath.KaTeX
+                ],
+                
+                // Markdown 插件配置
+                markdown: {
+                    smartypants: true
+                },
+                
+                // 数学公式配置 (KaTeX)
+                math: {
+                    mathjax: null,
+                    config: 'TeX-AMS_HTML-full',
+                    TeX: {
+                        Macros: {
+                            RR: "{\\bf R}"
+                        }
+                    }
+                }
+            }
+        };
+        
+        // ========================================
+        // 应用自定义主题
+        // ========================================
+        function applyCustomTheme(theme) {
+            const root = document.documentElement;
+            Object.entries(theme).forEach(([key, value]) => {
+                const cssVar = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+                root.style.setProperty(cssVar, value);
+            });
+        }
+        
+        // ========================================
+        // 初始化 Reveal.js
+        // ========================================
+        applyCustomTheme(PRESENTATION_CONFIG.theme);
+        
+        Reveal.initialize(PRESENTATION_CONFIG.revealOptions).then(() => {
+            console.log('✨ Reveal.js 演示文稿已加载');
+            console.log('📚 快捷键帮助: 按 ? 键');
+            console.log('🎤 演讲者视图: 按 S 键');
+            console.log('🔍 概览模式: 按 ESC 键');
+        });
+        
+        // ========================================
+        // 高级 API 使用示例
+        // ========================================
+        
+        // 监听幻灯片切换事件
+        Reveal.on('slidechanged', event => {
+            console.log(`切换到幻灯片: ${event.indexh + 1}`);
+            // 这里可以添加自定义逻辑，如：
+            // - 发送分析数据
+            // - 触发特定动画
+            // - 更新外部UI
+        });
+        
+        // 监听 fragment 显示事件
+        Reveal.on('fragmentshown', event => {
+            console.log('Fragment 显示:', event.fragment);
+            // 可以在这里添加自定义动画或逻辑
+        });
+        
+        // 编程式导航示例
+        function customNavigation() {
+            // 跳转到特定幻灯片
+            // Reveal.slide(2);           // 跳到第3张
+            // Reveal.slide(2, 1);        // 跳到第3张的第2个子幻灯片
+            
+            // 前进/后退
+            // Reveal.next();             // 下一张
+            // Reveal.prev();             // 上一张
+            
+            // 导航到特定方向
+            // Reveal.left();
+            // Reveal.right();
+            // Reveal.down();
+            // Reveal.up();
+            
+            // 获取当前状态
+            // const state = Reveal.getState();
+            // console.log(state);
+            
+            // 触发特定功能
+            // Reveal.toggleOverview();   // 切换概览模式
+            // Reveal.togglePause();      // 暂停/恢复
+            // Reveal.toggleHelp();       // 显示/隐藏帮助
+        }
+        
+        // 自定义事件处理示例
+        document.addEventListener('DOMContentLoaded', () => {
+            // 在这里添加额外的初始化逻辑
+            // 例如：加载外部数据、设置定时器、绑定自定义事件等
+        });
+        
+        // ========================================
+        // 实用工具函数
+        // ========================================
+        
+        // 动态更新主题颜色
+        function updateThemeColor(colorName, newValue) {
+            const cssVar = `--color-${colorName.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+            document.documentElement.style.setProperty(cssVar, newValue);
+        }
+        
+        // 获取当前幻灯片索引
+        function getCurrentSlideIndex() {
+            const indices = Reveal.getIndices();
+            return {
+                horizontal: indices.h,
+                vertical: indices.v,
+                fragment: indices.f
+            };
+        }
+        
+        // 添加自定义 CSS 类到当前幻灯片
+        function addClassToCurrentSlide(className) {
+            const currentSlide = Reveal.getCurrentSlide();
+            currentSlide.classList.add(className);
+        }
+        
+        // ========================================
+        // 导出全局 API (供控制台调试使用)
+        // ========================================
+        window.PresentationAPI = {
+            reveal: Reveal,
+            config: PRESENTATION_CONFIG,
+            updateTheme: updateThemeColor,
+            getCurrentIndex: getCurrentSlideIndex,
+            addClassToSlide: addClassToCurrentSlide
+        };
+        
+        console.log('💡 使用 window.PresentationAPI 访问演示文稿 API');
+    </script>
+</body>
+</html>

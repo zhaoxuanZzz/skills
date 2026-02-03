@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Skills 学习指南 - 演示文稿</title>
+    
+    <!-- Reveal.js 核心样式 (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/night.css" id="theme">
+    
+    <!-- 代码高亮主题 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #4A90E2;
+            --color-secondary: #9B59B6;
+            --color-accent: #E67E22;
+            --color-success: #27AE60;
+            --color-warning: #F39C12;
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Lora', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        .reveal {
+            font-family: var(--font-body);
+            font-size: 32px;
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: none;
+        }
+        
+        .reveal h1 {
+            font-size: 3em;
+            color: var(--color-primary);
+            text-shadow: 0 2px 10px rgba(74, 144, 226, 0.3);
+        }
+        
+        .reveal h2 {
+            font-size: 2.2em;
+            color: var(--color-secondary);
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal h3 {
+            font-size: 1.6em;
+            color: var(--color-accent);
+        }
+        
+        .reveal code {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+        }
+        
+        .reveal pre code {
+            background: #2d2d2d;
+            padding: 1em;
+            border-radius: 8px;
+            font-size: 0.65em;
+            line-height: 1.4;
+        }
+        
+        .reveal ul, .reveal ol {
+            text-align: left;
+        }
+        
+        .reveal li {
+            margin: 0.5em 0;
+        }
+        
+        .highlight {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+        
+        .emoji-large {
+            font-size: 2em;
+            vertical-align: middle;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            align-items: start;
+        }
+        
+        .box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5em;
+            border-radius: 12px;
+            border-left: 4px solid var(--color-primary);
+        }
+        
+        .box.success {
+            border-left-color: var(--color-success);
+        }
+        
+        .box.warning {
+            border-left-color: var(--color-warning);
+        }
+        
+        .fragment.fade-in-then-semi-out {
+            opacity: 0;
+        }
+        
+        .fragment.fade-in-then-semi-out.visible {
+            opacity: 1;
+        }
+        
+        .fragment.fade-in-then-semi-out.current-fragment {
+            opacity: 1;
+        }
+        
+        .fragment.fade-in-then-semi-out.visible:not(.current-fragment) {
+            opacity: 0.4;
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- 标题页 -->
+            <section data-transition="zoom">
+                <h1>🎯 Agent Skills</h1>
+                <h3>让 AI 代理获得专业能力的模块化系统</h3>
+                <p style="margin-top: 2em; font-size: 0.8em; opacity: 0.8;">
+                    <em>从通用到专业，让 Claude 成为领域专家</em>
+                </p>
+                <aside class="notes">
+                    欢迎来到 Agent Skills 学习分享！今天我们将深入了解如何通过模块化技能系统来扩展 AI 代理的能力。
+                </aside>
+            </section>
+
+            <!-- 什么是 Agent Skills -->
+            <section>
+                <section data-transition="slide">
+                    <h2>💡 什么是 Agent Skills？</h2>
+                    <div class="box" style="margin-top: 2em;">
+                        <p style="font-size: 0.9em; line-height: 1.6;">
+                            <span class="highlight">Agent Skills</span> 是模块化、自包含的知识包，通过提供<span class="highlight">专业知识</span>、<span class="highlight">工作流程</span>和<span class="highlight">工具集成</span>来扩展 Claude 的能力。
+                        </p>
+                    </div>
+                    <p class="fragment" style="margin-top: 2em; font-size: 0.8em; color: var(--color-accent);">
+                        💭 可以把它们想象成 AI 的"专业培训课程"
+                    </p>
+                    <aside class="notes">
+                        Agent Skills 是专门设计的知识模块，它们像是给 AI 提供的专业培训材料，让通用的 AI 变成某个领域的专家。
+                    </aside>
+                </section>
+
+                <section data-transition="slide">
+                    <h3>🎯 核心价值</h3>
+                    <div class="two-column" style="margin-top: 2em;">
+                        <div class="fragment">
+                            <div class="box">
+                                <h4>🧠 从通用到专业</h4>
+                                <p style="font-size: 0.75em;">将 Claude 从通用代理转变为配备特定领域程序性知识的专业代理</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box success">
+                                <h4>📦 模块化设计</h4>
+                                <p style="font-size: 0.75em;">自包含、可复用、易于维护和分享的知识单元</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two-column" style="margin-top: 1em;">
+                        <div class="fragment">
+                            <div class="box warning">
+                                <h4>⚡ 高效上下文管理</h4>
+                                <p style="font-size: 0.75em;">渐进式加载，只在需要时载入相关内容</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box">
+                                <h4>🔧 工具整合</h4>
+                                <p style="font-size: 0.75em;">包含脚本、文档和资源，实现端到端的任务处理</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        Skills 提供四大核心价值：专业化转换、模块化设计、高效的上下文管理，以及完整的工具整合能力。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- Skill 提供什么 -->
+            <section>
+                <section data-transition="convex">
+                    <h2>🎁 Skill 提供什么？</h2>
+                </section>
+
+                <section>
+                    <h3>1️⃣ 专业化工作流</h3>
+                    <ul style="font-size: 0.85em; margin-top: 1.5em;">
+                        <li class="fragment">特定领域的<span class="highlight">多步骤流程</span></li>
+                        <li class="fragment">例如：PDF 处理、数据分析、代码审查</li>
+                        <li class="fragment">提供清晰的<span class="highlight">步骤指引</span>和<span class="highlight">决策逻辑</span></li>
+                    </ul>
+                    <aside class="notes">
+                        第一类是专业化工作流，它为特定任务提供详细的操作步骤和决策指引。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>2️⃣ 工具集成</h3>
+                    <ul style="font-size: 0.85em; margin-top: 1.5em;">
+                        <li class="fragment">与特定<span class="highlight">文件格式</span>或 <span class="highlight">API</span> 协同工作</li>
+                        <li class="fragment">例如：Excel 操作、数据库查询、Web API 调用</li>
+                        <li class="fragment">内置<span class="highlight">脚本</span>和<span class="highlight">工具函数</span></li>
+                    </ul>
+                    <aside class="notes">
+                        第二类是工具集成，提供与外部系统和文件格式交互的能力。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>3️⃣ 领域专业知识</h3>
+                    <ul style="font-size: 0.85em; margin-top: 1.5em;">
+                        <li class="fragment">公司特定的<span class="highlight">知识</span>、<span class="highlight">模式</span>、<span class="highlight">业务逻辑</span></li>
+                        <li class="fragment">例如：内部 API 文档、数据库 Schema、编码规范</li>
+                        <li class="fragment">AI 模型<span class="highlight">无法预训练</span>的专有信息</li>
+                    </ul>
+                    <aside class="notes">
+                        第三类是领域专业知识，这些是 AI 模型训练时无法获得的公司或领域特有的信息。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>4️⃣ 捆绑资源</h3>
+                    <ul style="font-size: 0.85em; margin-top: 1.5em;">
+                        <li class="fragment"><span class="highlight">脚本</span>：可执行的 Python、Bash 等代码</li>
+                        <li class="fragment"><span class="highlight">参考文档</span>：详细的技术文档和示例</li>
+                        <li class="fragment"><span class="highlight">资源文件</span>：模板、图标、字体等</li>
+                    </ul>
+                    <aside class="notes">
+                        第四类是捆绑资源，包括可执行脚本、参考文档和各种资源文件。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- Skill 结构解析 -->
+            <section>
+                <section data-transition="fade">
+                    <h2>🏗️ Skill 结构解析</h2>
+                </section>
+
+                <section>
+                    <h3>📁 标准目录结构</h3>
+                    <pre class="fragment"><code class="language-plaintext" data-trim>
+skill-name/
+├── SKILL.md          # 核心文档（必需）
+│   ├── YAML 元数据
+│   └── Markdown 指令
+└── 捆绑资源（可选）
+    ├── scripts/      # 可执行脚本
+    ├── references/   # 参考文档
+    └── assets/       # 输出资源
+                    </code></pre>
+                    <aside class="notes">
+                        每个 Skill 都遵循标准的目录结构，核心是 SKILL.md 文件，可选的捆绑资源按用途分类。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>📄 SKILL.md 组成</h3>
+                    <div class="two-column" style="margin-top: 2em; font-size: 0.8em;">
+                        <div class="fragment">
+                            <div class="box">
+                                <h4>YAML 元数据</h4>
+                                <pre style="margin-top: 0.5em;"><code class="language-yaml" data-trim style="font-size: 0.9em;">
+---
+name: skill-name
+description: 何时使用此技能
+license: LICENSE.txt
+---
+                                </code></pre>
+                                <p style="font-size: 0.85em; margin-top: 0.5em;">触发条件和描述</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box success">
+                                <h4>Markdown 正文</h4>
+                                <ul style="font-size: 0.85em; margin-top: 0.5em;">
+                                    <li>使用说明</li>
+                                    <li>工作流程</li>
+                                    <li>示例代码</li>
+                                    <li>最佳实践</li>
+                                </ul>
+                                <p style="font-size: 0.85em; margin-top: 0.5em;">技能触发后载入</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        SKILL.md 由两部分组成：YAML 元数据决定何时触发技能，Markdown 正文包含详细的使用说明。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>📦 捆绑资源详解</h3>
+                    <div style="font-size: 0.75em; margin-top: 2em;">
+                        <div class="fragment" style="margin-bottom: 1.5em;">
+                            <div class="box">
+                                <h4>📜 scripts/ - 可执行脚本</h4>
+                                <p><strong>用途：</strong>需要确定性可靠性或重复编写的任务</p>
+                                <p><strong>示例：</strong><code>rotate_pdf.py</code> - PDF 旋转脚本</p>
+                                <p><strong>优势：</strong>Token 高效、确定性、可直接执行</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 1.5em;">
+                            <div class="box success">
+                                <h4>📚 references/ - 参考文档</h4>
+                                <p><strong>用途：</strong>需要时载入上下文的文档材料</p>
+                                <p><strong>示例：</strong><code>api_docs.md</code>, <code>finance.md</code></p>
+                                <p><strong>优势：</strong>保持 SKILL.md 简洁，按需加载</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box warning">
+                                <h4>🎨 assets/ - 输出资源</h4>
+                                <p><strong>用途：</strong>输出中使用的文件（不载入上下文）</p>
+                                <p><strong>示例：</strong><code>logo.png</code>, <code>template.html</code></p>
+                                <p><strong>优势：</strong>分离输出资源与文档</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        三类捆绑资源各有用途：scripts 用于确定性任务，references 用于参考文档，assets 用于输出资源。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- 核心设计原则 -->
+            <section>
+                <section data-transition="zoom">
+                    <h2>⚖️ 核心设计原则</h2>
+                </section>
+
+                <section>
+                    <h3>原则 1: 简洁至上</h3>
+                    <div class="box" style="margin-top: 2em; font-size: 0.85em;">
+                        <p class="highlight" style="font-size: 1.1em; margin-bottom: 1em;">
+                            上下文窗口是公共资源 🌐
+                        </p>
+                        <ul>
+                            <li class="fragment">默认假设：<span class="highlight">Claude 已经很聪明</span></li>
+                            <li class="fragment">只添加 Claude <span class="highlight">没有的上下文</span></li>
+                            <li class="fragment">每段信息都要证明其 <span class="highlight">Token 成本</span>的合理性</li>
+                            <li class="fragment">优先使用<span class="highlight">简洁示例</span>而非冗长解释</li>
+                        </ul>
+                    </div>
+                    <aside class="notes">
+                        第一原则是简洁至上。上下文窗口是共享资源，要珍惜使用，只添加真正必要的信息。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>原则 2: 设置适当的自由度</h3>
+                    <div style="font-size: 0.75em; margin-top: 1.5em;">
+                        <div class="fragment" style="margin-bottom: 1em;">
+                            <div class="box">
+                                <p><span class="emoji-large">🌊</span> <strong>高自由度</strong>（文本指令）</p>
+                                <p style="margin-left: 2em;">多种方法都有效，决策依赖上下文</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 1em;">
+                            <div class="box success">
+                                <p><span class="emoji-large">🛤️</span> <strong>中等自由度</strong>（伪代码 + 参数）</p>
+                                <p style="margin-left: 2em;">存在首选模式，允许一些变化</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box warning">
+                                <p><span class="emoji-large">🎯</span> <strong>低自由度</strong>（具体脚本）</p>
+                                <p style="margin-left: 2em;">操作脆弱易错，一致性至关重要</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="fragment" style="margin-top: 1.5em; font-size: 0.75em; font-style: italic;">
+                        💡 就像探索路径：悬崖峭壁需要护栏（低自由度），开阔平原允许多条路线（高自由度）
+                    </p>
+                    <aside class="notes">
+                        第二原则是设置适当的自由度。根据任务的脆弱性和可变性，选择合适的指令形式。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>原则 3: 渐进式披露</h3>
+                    <div style="margin-top: 2em; font-size: 0.85em;">
+                        <p class="highlight" style="margin-bottom: 1em;">三层加载系统 🔄</p>
+                        <div class="fragment" style="margin-bottom: 1em;">
+                            <div class="box">
+                                <p><strong>层级 1：</strong>元数据（name + description）</p>
+                                <p style="font-size: 0.9em; opacity: 0.8;">始终在上下文中 (~100 词)</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 1em;">
+                            <div class="box success">
+                                <p><strong>层级 2：</strong>SKILL.md 正文</p>
+                                <p style="font-size: 0.9em; opacity: 0.8;">技能触发时加载 (<5k 词)</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box warning">
+                                <p><strong>层级 3：</strong>捆绑资源</p>
+                                <p style="font-size: 0.9em; opacity: 0.8;">Claude 按需读取（不限）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        第三原则是渐进式披露，通过三层加载系统高效管理上下文，只在需要时加载相关内容。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- 实战模式 -->
+            <section>
+                <section data-transition="slide">
+                    <h2>🛠️ 实战模式</h2>
+                    <p style="font-size: 0.8em; opacity: 0.8;">渐进式披露的具体应用</p>
+                </section>
+
+                <section>
+                    <h3>模式 1: 高层指南 + 引用</h3>
+                    <pre style="font-size: 0.55em;"><code class="language-markdown" data-trim>
+# PDF 处理
+
+## 快速开始
+使用 pdfplumber 提取文本：
+```python
+import pdfplumber
+with pdfplumber.open("file.pdf") as pdf:
+    text = pdf.pages[0].extract_text()
+```
+
+## 高级功能
+- **表单填充**: 参见 [FORMS.md](FORMS.md)
+- **API 参考**: 参见 [REFERENCE.md](REFERENCE.md)
+- **示例集合**: 参见 [EXAMPLES.md](EXAMPLES.md)
+                    </code></pre>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 1em;">
+                        ✅ Claude 仅在需要时读取 FORMS.md、REFERENCE.md 或 EXAMPLES.md
+                    </p>
+                    <aside class="notes">
+                        模式一：在主文档中提供概览和快速开始，将详细内容拆分到独立文件，按需引用。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>模式 2: 领域特定组织</h3>
+                    <pre style="font-size: 0.6em;"><code class="language-plaintext" data-trim>
+bigquery-skill/
+├── SKILL.md              # 概览和导航
+└── reference/
+    ├── finance.md        # 财务、计费指标
+    ├── sales.md          # 销售机会、管道
+    ├── product.md        # API 使用、功能
+    └── marketing.md      # 营销活动、归因
+                    </code></pre>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 1em;">
+                        ✅ 用户询问销售指标时，Claude <span class="highlight">仅读取 sales.md</span>
+                    </p>
+                    <aside class="notes">
+                        模式二：按领域或功能组织内容，避免加载无关上下文，提高效率。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>模式 3: 条件式详情</h3>
+                    <pre style="font-size: 0.55em;"><code class="language-markdown" data-trim>
+# DOCX 处理
+
+## 创建文档
+使用 docx-js 创建新文档。参见 [DOCX-JS.md](DOCX-JS.md)
+
+## 编辑文档
+对于简单编辑，直接修改 XML。
+
+**对于修订跟踪**: 参见 [REDLINING.md](REDLINING.md)
+**对于 OOXML 详情**: 参见 [OOXML.md](OOXML.md)
+                    </code></pre>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 1em;">
+                        ✅ 仅当用户需要这些功能时，Claude 才读取相应文档
+                    </p>
+                    <aside class="notes">
+                        模式三：展示基础内容，将高级功能链接到专门文档，实现条件加载。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>⚠️ 重要指南</h3>
+                    <div style="font-size: 0.8em; margin-top: 2em;">
+                        <div class="box warning" style="margin-bottom: 1em;">
+                            <p><strong>❌ 避免深度嵌套引用</strong></p>
+                            <p style="font-size: 0.9em;">保持引用层级为一层，所有引用文件应直接从 SKILL.md 链接</p>
+                        </div>
+                        <div class="box success">
+                            <p><strong>✅ 构建长引用文件</strong></p>
+                            <p style="font-size: 0.9em;">超过 100 行的文件应在顶部包含目录，便于 Claude 预览全貌</p>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        实战中要注意两点：避免过深的引用嵌套，为长文件提供目录导航。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- 实际案例 -->
+            <section>
+                <section data-transition="convex">
+                    <h2>📚 实际案例分析</h2>
+                </section>
+
+                <section>
+                    <h3>案例 1: skill-creator</h3>
+                    <div style="font-size: 0.75em; margin-top: 1.5em;">
+                        <div class="box" style="margin-bottom: 1em;">
+                            <p><strong>目标：</strong>指导用户创建有效的 Skills</p>
+                        </div>
+                        <div class="two-column">
+                            <div class="fragment">
+                                <p class="highlight">核心内容：</p>
+                                <ul style="font-size: 0.95em;">
+                                    <li>设计原则</li>
+                                    <li>结构规范</li>
+                                    <li>最佳实践</li>
+                                    <li>工作流程</li>
+                                </ul>
+                            </div>
+                            <div class="fragment">
+                                <p class="highlight">捆绑资源：</p>
+                                <ul style="font-size: 0.95em;">
+                                    <li>📜 <code>init_skill.py</code></li>
+                                    <li>📜 <code>package_skill.py</code></li>
+                                    <li>📚 <code>workflows.md</code></li>
+                                    <li>📚 <code>output-patterns.md</code></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        第一个案例是 skill-creator，它教用户如何创建技能，包含完整的指南和辅助工具。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>案例 2: web-presentation</h3>
+                    <div style="font-size: 0.75em; margin-top: 1.5em;">
+                        <div class="box" style="margin-bottom: 1em;">
+                            <p><strong>目标：</strong>创建交互式 Web 演示文稿</p>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 1em;">
+                            <p class="highlight">特色功能：</p>
+                            <ul style="font-size: 0.9em;">
+                                <li>🎬 高级动画（Fragment、Auto-Animate）</li>
+                                <li>🎤 演讲者视图（备注、计时器）</li>
+                                <li>📐 多种布局模板</li>
+                                <li>🚀 单文件输出（基于 CDN）</li>
+                            </ul>
+                        </div>
+                        <div class="fragment">
+                            <p class="highlight">工作流程：</p>
+                            <p style="font-size: 0.9em;">通过交互式问答引导创建 → 生成自包含 HTML</p>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        第二个案例是 web-presentation，展示了如何用交互式工作流创建专业演示文稿。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>🎯 这个演示文稿本身</h3>
+                    <div class="box" style="margin-top: 2em; font-size: 0.85em;">
+                        <p class="highlight" style="font-size: 1.2em; margin-bottom: 1em;">正是由 web-presentation Skill 创建！</p>
+                        <ul>
+                            <li class="fragment">✅ 使用 Reveal.js 框架</li>
+                            <li class="fragment">✅ 自包含 HTML（无需构建）</li>
+                            <li class="fragment">✅ 专业主题和动画</li>
+                            <li class="fragment">✅ 演讲者备注支持</li>
+                            <li class="fragment">✅ 响应式设计</li>
+                        </ul>
+                    </div>
+                    <p class="fragment" style="margin-top: 1.5em; font-size: 0.75em; color: var(--color-accent);">
+                        💡 这就是 Skill 的实际应用价值！
+                    </p>
+                    <aside class="notes">
+                        有趣的是，你现在看到的这个演示文稿本身就是用 web-presentation 技能创建的，完美展示了技能的实用性。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- 创建你的第一个 Skill -->
+            <section>
+                <section data-transition="zoom">
+                    <h2>🚀 创建你的第一个 Skill</h2>
+                </section>
+
+                <section>
+                    <h3>步骤 1: 明确目标</h3>
+                    <div style="font-size: 0.8em; margin-top: 2em;">
+                        <div class="box" style="margin-bottom: 1em;">
+                            <p class="highlight">问自己这些问题：</p>
+                        </div>
+                        <ul>
+                            <li class="fragment">🎯 这个 Skill 要解决什么问题？</li>
+                            <li class="fragment">👥 谁会使用它？在什么场景下？</li>
+                            <li class="fragment">📊 Claude 缺少哪些关键信息？</li>
+                            <li class="fragment">🔧 需要什么工具或脚本？</li>
+                            <li class="fragment">📝 如何判断任务是否成功完成？</li>
+                        </ul>
+                    </div>
+                    <aside class="notes">
+                        创建技能的第一步是明确目标，回答这五个关键问题。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>步骤 2: 设计结构</h3>
+                    <div style="font-size: 0.75em; margin-top: 1.5em;">
+                        <pre class="fragment"><code class="language-yaml" data-trim>
+# 创建基本结构
+my-skill/
+├── SKILL.md           # 从这里开始
+└── (根据需要添加)
+    ├── scripts/
+    ├── references/
+    └── assets/
+                        </code></pre>
+                        <div class="fragment" style="margin-top: 1em;">
+                            <div class="box">
+                                <p><strong>💡 提示：</strong>先完成 SKILL.md，再考虑是否需要其他资源</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        第二步是设计结构，从 SKILL.md 开始，根据实际需要添加其他资源。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>步骤 3: 编写 SKILL.md</h3>
+                    <div style="font-size: 0.65em; margin-top: 1.5em;">
+                        <pre class="fragment"><code class="language-markdown" data-trim>
+---
+name: my-awesome-skill
+description: 简洁描述何时使用此技能，以及它能做什么
+license: MIT
+---
+
+# My Awesome Skill
+
+## 概述
+简要说明这个技能的用途和价值
+
+## 使用场景
+列出适用的具体场景
+
+## 工作流程
+1. 第一步做什么
+2. 第二步做什么
+3. ...
+
+## 示例
+提供清晰的代码示例
+
+## 注意事项
+列出重要的注意事项或限制
+                        </code></pre>
+                    </div>
+                    <aside class="notes">
+                        第三步是编写 SKILL.md，遵循标准格式，包含元数据和结构化的正文内容。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>步骤 4: 迭代优化</h3>
+                    <div style="font-size: 0.85em; margin-top: 2em;">
+                        <ul>
+                            <li class="fragment">
+                                <span class="highlight">测试：</span>实际使用，看是否达到预期
+                            </li>
+                            <li class="fragment">
+                                <span class="highlight">简化：</span>删除冗余内容，保持简洁
+                            </li>
+                            <li class="fragment">
+                                <span class="highlight">拆分：</span>超过 500 行？考虑拆分到引用文件
+                            </li>
+                            <li class="fragment">
+                                <span class="highlight">优化：</span>调整自由度，确保适合任务类型
+                            </li>
+                        </ul>
+                        <div class="fragment" style="margin-top: 1.5em;">
+                            <div class="box success">
+                                <p>🎯 记住：好的 Skill 是迭代出来的！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        最后一步是迭代优化，通过实际使用不断改进技能的质量和效率。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- 最佳实践清单 -->
+            <section>
+                <section data-transition="slide">
+                    <h2>✅ 最佳实践清单</h2>
+                </section>
+
+                <section>
+                    <h3>✅ 应该做的</h3>
+                    <div style="font-size: 0.75em; margin-top: 1.5em;">
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box success">
+                                <p>✅ 保持 description 清晰、全面（这是触发条件）</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box success">
+                                <p>✅ 使用简洁示例替代冗长解释</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box success">
+                                <p>✅ 根据任务脆弱性调整自由度</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box success">
+                                <p>✅ 将详细内容拆分到引用文件</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box success">
+                                <p>✅ 为长文件提供目录导航</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        这些是创建技能时应该遵循的最佳实践。
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>❌ 不应该做的</h3>
+                    <div style="font-size: 0.75em; margin-top: 1.5em;">
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box warning">
+                                <p>❌ 不要创建 README.md 等辅助文档</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box warning">
+                                <p>❌ 不要假设 Claude 不知道基础知识</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box warning">
+                                <p>❌ 不要在 SKILL.md 和 references 中重复信息</p>
+                            </div>
+                        </div>
+                        <div class="fragment" style="margin-bottom: 0.8em;">
+                            <div class="box warning">
+                                <p>❌ 不要创建深度嵌套的引用结构</p>
+                            </div>
+                        </div>
+                        <div class="fragment">
+                            <div class="box warning">
+                                <p>❌ 不要让 SKILL.md 超过 500 行（考虑拆分）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        同时也要避免这些常见的错误做法。
+                    </aside>
+                </section>
+            </section>
+
+            <!-- 总结 -->
+            <section data-transition="zoom">
+                <h2>🎓 总结</h2>
+                <div style="font-size: 0.85em; margin-top: 2em;">
+                    <div class="fragment" style="margin-bottom: 1em;">
+                        <div class="box">
+                            <p>💡 <strong>Skills 是什么：</strong>模块化知识包，让 AI 成为领域专家</p>
+                        </div>
+                    </div>
+                    <div class="fragment" style="margin-bottom: 1em;">
+                        <div class="box success">
+                            <p>⚖️ <strong>核心原则：</strong>简洁、适度自由度、渐进式披露</p>
+                        </div>
+                    </div>
+                    <div class="fragment" style="margin-bottom: 1em;">
+                        <div class="box warning">
+                            <p>🏗️ <strong>标准结构：</strong>SKILL.md + 可选的 scripts/references/assets</p>
+                        </div>
+                    </div>
+                    <div class="fragment">
+                        <div class="box">
+                            <p>🚀 <strong>开始创建：</strong>明确目标 → 设计结构 → 编写文档 → 迭代优化</p>
+                        </div>
+                    </div>
+                </div>
+                <aside class="notes">
+                    让我们总结一下今天学到的关键内容。
+                </aside>
+            </section>
+
+            <!-- 结束页 -->
+            <section data-transition="zoom">
+                <h1>🎯 谢谢观看！</h1>
+                <div style="margin-top: 3em; font-size: 0.8em;">
+                    <p class="fragment">📚 更多信息：<a href="https://agentskills.io/specification" target="_blank">agentskills.io/specification</a></p>
+                    <p class="fragment" style="margin-top: 1em;">🚀 开始创建你的第一个 Skill 吧！</p>
+                </div>
+                <div class="fragment" style="margin-top: 3em; font-size: 0.7em; opacity: 0.6;">
+                    <p>💡 提示：按 <kbd>S</kbd> 键查看演讲者备注</p>
+                    <p>按 <kbd>ESC</kbd> 键查看幻灯片概览</p>
+                </div>
+                <aside class="notes">
+                    感谢大家的参与！希望这个演示能帮助你理解 Agent Skills 的概念和应用。现在就开始创建你自己的技能吧！
+                </aside>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js 核心库 (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    
+    <!-- Reveal.js 插件 (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/zoom/zoom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/search/search.js"></script>
+
+    <script>
+        // Reveal.js 配置
+        Reveal.initialize({
+            // 显示设置
+            width: 1280,
+            height: 720,
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            
+            // 控制
+            controls: true,
+            controlsTutorial: true,
+            controlsLayout: 'bottom-right',
+            controlsBackArrows: 'faded',
+            progress: true,
+            slideNumber: 'c/t',
+            showSlideNumber: 'all',
+            hash: true,
+            respondToHashChanges: true,
+            jumpToSlide: true,
+            
+            // 导航
+            history: true,
+            keyboard: true,
+            overview: true,
+            center: true,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: true,
+            embedded: false,
+            help: true,
+            pause: true,
+            
+            // 演示者模式
+            showNotes: false,
+            
+            // 自动播放
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoAnimate: true,
+            autoAnimateMatcher: null,
+            autoAnimateEasing: 'ease',
+            autoAnimateDuration: 1.0,
+            autoAnimateUnmatched: true,
+            
+            // 转场
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            
+            // 视差
+            parallaxBackgroundImage: '',
+            parallaxBackgroundSize: '',
+            parallaxBackgroundHorizontal: null,
+            parallaxBackgroundVertical: null,
+            
+            // 插件
+            plugins: [
+                RevealMarkdown,
+                RevealHighlight,
+                RevealNotes,
+                RevealZoom,
+                RevealSearch
+            ]
+        });
+
+        // 自定义快捷键
+        Reveal.addKeyBinding({ keyCode: 70, key: 'F' }, function() {
+            // F 键全屏
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen();
+            }
+        });
+
+        // 监听幻灯片变化
+        Reveal.on('slidechanged', event => {
+            console.log('当前幻灯片:', event.indexh, event.indexv);
+        });
+
+        // 监听 fragment 显示
+        Reveal.on('fragmentshown', event => {
+            console.log('Fragment 显示:', event.fragment);
+        });
+    </script>
+</body>
+</html>
