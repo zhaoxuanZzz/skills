@@ -1,0 +1,23 @@
+{
+  "name": "agent-skills",
+  "owner": {
+    "name": "Skills Repository",
+    "email": "504242598@qq.com"
+  },
+  "metadata": {
+    "description": "Collection of agent skills for extending Claude capabilities",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "core-skills",
+      "description": "Core skills collection providing essential functionality",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/skill-creator",
+        "./skills/web-presentation"
+      ]
+    }
+  ]
+}
