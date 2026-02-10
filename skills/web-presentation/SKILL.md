@@ -1,6 +1,6 @@
 ---
 name: web-presentation
-description: Create modern, interactive web presentations as single-file HTML artifacts powered by Reveal.js. Use this when users request creating slides, presentations, slide decks, web presentations, or browser-based presentations. Features advanced animations, speaker notes, overview mode, and full Reveal.js API access. Output .html files that can be opened directly in a browser or displayed as claude.ai artifacts.
+description: Create modern, interactive web presentations powered by Reveal.js. Supports both single-file HTML presentations AND multi-presentation repository management with GitHub Pages deployment. Use for creating slides, presentations, slide decks, presentation repositories with auto-generated index pages. Features advanced animations, speaker notes, overview mode, and full Reveal.js API access.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -8,11 +8,18 @@ license: Complete terms in LICENSE.txt
 
 # Web Presentation Skill
 
-Create elegant, interactive presentations powered by **Reveal.js** that run entirely in a web browser as single HTML files. Perfect for product launches, technical talks, educational content, and any scenario requiring modern, professional slides with advanced features.
+Create elegant, interactive presentations powered by **Reveal.js**. Supports **two modes**:
+1. **Single-file mode**: Self-contained HTML presentations for quick sharing
+2. **Repository mode**: Multi-presentation management system with GitHub Pages deployment and auto-generated index
+
+Perfect for product launches, technical talks, educational content, and building a complete presentation portfolio.
 
 ## Overview
 
-This skill creates self-contained HTML presentations with:
+This skill supports two distinct modes:
+
+### Mode 1: Single Presentation (Quick & Simple)
+Creates self-contained HTML presentations with:
 - **🎬 Advanced animations** - Fragment animations, auto-animate, parallax effects
 - **🎤 Speaker notes** - Dedicated speaker view with notes and timer (press S)
 - **🔍 Overview mode** - Bird's-eye view of all slides (press ESC)
@@ -26,9 +33,37 @@ This skill creates self-contained HTML presentations with:
 - **🚀 Single-file output** - Everything via CDN, no build process required
 - **🛠️ Full API access** - Complete Reveal.js API for advanced customization
 
-## When to Use This Skill
+### Mode 2: Presentation Repository (Professional & Scalable)
+Manages multiple presentations with:
+- **📁 Organized structure** - Each presentation in its own folder with metadata
+- **🖼️ Auto-generated index** - Beautiful gallery page showing all presentations
+- **🏷️ Metadata system** - JSON metadata files for each presentation (title, author, date, tags, etc.)
+- **🌐 GitHub Pages ready** - One-command deployment to GitHub Pages
+- **📸 Thumbnail support** - Visual previews for each presentation
+- **🔍 Searchable & filterable** - Index page with tags and categories
+- **🛠️ Build scripts** - Automated index generation via Node.js
+- **📦 Template system** - Quick creation of new presentations from templates
 
-**Use for:**
+## When to Use Each Mode
+
+**Single Presentation Mode - Use for:**
+✅ Quick one-off presentations
+✅ Sharing a single deck via email or chat
+✅ Embedding in documents or websites
+✅ Claude.ai artifacts
+✅ No-setup requirements
+
+**Repository Mode - Use for:**
+✅ Managing multiple presentations
+✅ Building a presentation portfolio
+✅ Team/organization presentation library
+✅ GitHub Pages publication
+✅ Categorized presentation collections
+✅ Professional presentation website
+
+## Common Use Cases
+
+**Use this skill for:**
 ✅ Product presentations and pitches
 ✅ Conference talks and tech presentations
 ✅ Educational slideshows and lectures
@@ -36,6 +71,8 @@ This skill creates self-contained HTML presentations with:
 ✅ Portfolio showcases
 ✅ Workshop materials
 ✅ Documentation walkthroughs
+✅ Presentation portfolio websites
+✅ Team presentation libraries
 
 **Don't use for:**
 ❌ Static documents (use docx skill instead)
@@ -45,9 +82,82 @@ This skill creates self-contained HTML presentations with:
 
 ---
 
+## Repository Structure (Repository Mode)
+
+When using repository mode, the following structure is created:
+
+```
+presentation-repo/
+├── index.html                    # Auto-generated index page (DO NOT EDIT)
+├── .nojekyll                     # GitHub Pages config
+├── package.json                  # Project configuration
+├── package-lock.json             # Dependencies lock file
+├── presentations/                # All presentations directory
+│   ├── my-first-presentation/    # Individual presentation folder
+│   │   ├── index.html           # Presentation HTML file
+│   │   ├── metadata.json        # Presentation metadata
+│   │   └── thumbnail.png        # Presentation thumbnail (800x600)
+│   └── another-presentation/
+│       ├── index.html
+│       ├── metadata.json
+│       └── thumbnail.png
+├── templates/                    # Template files
+│   ├── presentation-template.html   # Presentation template
+│   ├── metadata-template.json       # Metadata template
+│   └── index-template.html          # Index page template
+├── scripts/                      # Build scripts
+│   └── generate-index.js        # Index generation script
+├── assets/                       # Shared resources
+│   └── css/
+│       └── custom.css           # Custom global styles
+└── README.md                     # Repository documentation
+```
+
+### Metadata JSON Schema
+
+Each presentation has a `metadata.json` file:
+
+```json
+{
+  "id": "my-presentation",              // Unique identifier
+  "title": "My Awesome Presentation",   // Display title
+  "description": "A brief description", // Short description
+  "author": "Author Name",              // Author name
+  "date": "2026-02-10",                // Date (YYYY-MM-DD)
+  "tags": ["tech", "tutorial"],        // Tags array
+  "thumbnail": "thumbnail.png",         // Thumbnail filename
+  "slides": 15,                         // Number of slides
+  "language": "zh-CN",                  // Language code
+  "category": "Tutorial"                // Category
+}
+```
+
+---
+
 ## Workflow
 
-🎯 **CRITICAL:** This skill uses an **interactive, question-guided approach**. Always ask questions to understand the user's needs before generating any code.
+🎯 **CRITICAL:** First determine which mode the user needs, then follow the appropriate workflow.
+
+### Decision: Which Mode?
+
+**Ask the user:**
+```
+您需要创建什么类型的演示文稿项目？
+
+1. **单个演示文稿** - 创建一个独立的HTML文件
+   - 适合：快速分享、一次性演讲、嵌入文档
+   
+2. **演示文稿仓库** - 创建一个完整的演示文稿管理系统
+   - 适合：多个演示文稿、团队库、GitHub Pages发布、演示文稿作品集
+
+请选择：[1] 单个演示文稿  [2] 演示文稿仓库
+```
+
+---
+
+## Workflow A: Single Presentation Mode
+
+This workflow uses an **interactive, question-guided approach**. Always ask questions to understand the user's needs before generating any code.
 
 ### Step 1: Initial Discovery (Ask Questions)
 
@@ -396,6 +506,185 @@ Provide the HTML file with clear instructions:
 如需修改内容，在 HTML 文件中找到 <div class="slides"> 部分，
 编辑对应的 <section> 标签即可。
 ```
+
+---
+
+## Workflow B: Presentation Repository Mode
+
+Use this workflow when the user wants to manage multiple presentations with GitHub Pages deployment.
+
+### Step 1: Repository Initialization
+
+**Ask initial questions:**
+```
+让我为您创建一个演示文稿管理仓库！首先：
+
+📁 **仓库基本信息：**
+1. 仓库名称是什么？（例如：my-presentations, tech-talks, company-slides）
+2. 仓库放在哪个目录？（默认：当前工作目录）
+3. 是否要立即创建示例演示文稿？（推荐：是）
+
+📋 **初始内容：**
+4. 如果创建示例，主题是什么？
+5. 您的GitHub用户名是什么？（用于GitHub Pages配置）
+```
+
+**Wait for responses.**
+
+### Step 2: Create Repository Structure
+
+Create the complete repository structure:
+
+1. **Create directories:**
+```bash
+mkdir -p {repo-name}/{presentations,templates,scripts,assets/css}
+```
+
+2. **Copy template files:**
+   - `scripts/generate-index.js` - Index generation script
+   - `templates/presentation-template.html` - Presentation template  
+   - `templates/metadata-template.json` - Metadata template
+   - `templates/index-template.html` - Index page template
+   - `templates/README-template.md` - README template
+   - `templates/.gitignore-template` - .gitignore template
+   - `templates/custom-css-template.css` - Custom CSS template
+
+3. **Generate package.json** with build scripts
+4. **Create .nojekyll** for GitHub Pages
+5. **Create assets/css/custom.css** for shared styles
+6. **Create README.md** with usage instructions
+
+### Step 3: Optional - Create Example Presentation
+
+If user requested an example:
+
+1. Create `presentations/example-presentation/` directory
+2. Copy and customize presentation-template.html → index.html
+3. Create metadata.json with provided information
+4. Create or generate placeholder thumbnail.png (800x600)
+
+### Step 4: Initialize and Build
+
+```bash
+cd {repo-name}
+npm install
+npm run build
+```
+
+This generates the initial `index.html` with the presentation gallery.
+
+### Step 5: GitHub Pages Setup Instructions
+
+Provide step-by-step deployment instructions:
+
+```
+📚 仓库已创建！现在设置GitHub Pages：
+
+**1. 初始化Git并推送到GitHub：**
+```bash
+cd {repo-name}
+git init
+git add .
+git commit -m "Initial commit: Presentation repository"
+git remote add origin https://github.com/{username}/{repo-name}.git
+git push -u origin main
+```
+
+**2. 配置GitHub Pages：**
+1. 访问 https://github.com/{username}/{repo-name}/settings/pages
+2. Source: Deploy from a branch
+3. Branch: main / (root)
+4. 点击 Save
+
+**3. 等待部署（约1-3分钟）**
+您的演示文稿集合将在以下地址可访问：
+https://{username}.github.io/{repo-name}/
+
+**4. 添加新的演示文稿：**
+```bash
+# 创建新演示文稿目录
+mkdir presentations/my-new-talk
+
+# 复制模板
+cp templates/presentation-template.html presentations/my-new-talk/index.html
+cp templates/metadata-template.json presentations/my-new-talk/metadata.json
+
+# 编辑内容和元数据
+# 然后重新生成索引并部署
+npm run deploy
+```
+
+**本地预览：**
+```bash
+npm run dev
+```
+访问 http://localhost:8080 查看索引页
+```
+
+### Step 6: Optional - Create GitHub Action for Auto-Deploy
+
+**Ask user:**
+```
+是否要创建GitHub Action自动部署？
+这样每次push都会自动重新生成索引页。
+
+[是] [否]
+```
+
+If yes, create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Generate Index and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Generate index
+        run: npm run build
+      
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-generate index [skip ci]" && git push)
+```
+
+### Repository Mode Summary
+
+After completion, the user has:
+- ✅ Complete presentation repository structure
+- ✅ Auto-generated index page with gallery view
+- ✅ Templates for quick presentation creation
+- ✅ Build scripts for automation
+- ✅ GitHub Pages deployment ready
+- ✅ npm scripts for common tasks
+- ✅ (Optional) GitHub Action for auto-deployment
+
+**Next steps for the user:**
+1. Run `npm run dev` to preview locally
+2. Edit presentations and metadata
+3. Run `npm run build` after changes
+4. Run `npm run deploy` to push to GitHub
+5. Visit their GitHub Pages URL to see the live site
 
 ---
 

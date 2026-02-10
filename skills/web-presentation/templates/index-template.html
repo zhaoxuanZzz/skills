@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演示文稿集合</title>
+    <meta name="description" content="基于 Reveal.js 的演示文稿管理系统">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #2E86AB;
+            --secondary-color: #A23B72;
+            --accent-color: #F18F01;
+            --background: #f8f9fa;
+            --card-background: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --border-color: #e9ecef;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3em 2em;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.3em;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+        
+        .presentations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2em;
+            margin-top: 2em;
+        }
+        
+        .ppt-card {
+            background: var(--card-background);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ppt-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .ppt-card a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .ppt-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .card-content {
+            padding: 1.5em;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ppt-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5em;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        
+        .ppt-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1em;
+            flex-grow: 1;
+        }
+        
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            padding-top: 1em;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em;
+            margin-top: 1em;
+        }
+        
+        .tag {
+            background: var(--background);
+            color: var(--primary-color);
+            padding: 0.3em 0.8em;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4em 2em;
+            background: var(--card-background);
+            border-radius: 12px;
+            margin: 2em 0;
+        }
+        
+        .empty-state h2 {
+            color: var(--text-primary);
+            margin-bottom: 0.5em;
+        }
+        
+        .empty-state p {
+            color: var(--text-secondary);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2em;
+            margin-top: 4em;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .presentations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🎯 演示文稿集合</h1>
+        <p>基于 Reveal.js 的专业演示文稿管理系统</p>
+    </header>
+    
+    <div class="container">
+        <div class="presentations-grid">
+            {{PRESENTATIONS}}
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>
+            Powered by <a href="https://revealjs.com/" target="_blank">Reveal.js</a> | 
+            Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+        </p>
+        <p style="margin-top: 0.5em; font-size: 0.9em;">
+            添加新演示文稿请参考 <a href="README.md">README.md</a>
+        </p>
+    </footer>
+</body>
+</html>

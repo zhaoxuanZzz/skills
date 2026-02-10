@@ -1,0 +1,26 @@
+{
+  "name": "presentation-repo",
+  "version": "1.0.0",
+  "description": "Presentation repository powered by Reveal.js and GitHub Pages",
+  "main": "index.html",
+  "scripts": {
+    "build": "node scripts/generate-index.js",
+    "dev": "npx http-server -p 8080",
+    "deploy": "npm run build && git add . && git commit -m 'Update presentations' && git push"
+  },
+  "keywords": [
+    "presentations",
+    "reveal.js",
+    "slides",
+    "github-pages"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

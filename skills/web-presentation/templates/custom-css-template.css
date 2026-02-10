@@ -1,0 +1,41 @@
+/**
+ * 全局自定义样式
+ * 这个文件中的样式会应用到所有演示文稿
+ */
+
+/* 自定义颜色变量 */
+:root {
+    --brand-primary: #2E86AB;
+    --brand-secondary: #A23B72;
+    --brand-accent: #F18F01;
+}
+
+/* 自定义字体 */
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+    /* 取消注释以使用自定义字体 */
+    /* font-family: 'Your Custom Font', sans-serif; */
+}
+
+/* 自定义链接样式 */
+.reveal a {
+    color: var(--brand-primary);
+}
+
+.reveal a:hover {
+    color: var(--brand-accent);
+}
+
+/* 自定义代码块样式 */
+.reveal pre code {
+    border-radius: 8px;
+}
+
+/* 自定义列表样式 */
+.reveal ul,
+.reveal ol {
+    /* 在此添加自定义列表样式 */
+}
+
+/* 添加更多自定义样式... */
