@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw - 开源 AI 助手网关平台</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
+    <style>
+        :root {
+            --r-background-color: #1a1a2e;
+            --r-main-color: #eee;
+            --r-heading-color: #fff;
+            --r-link-color: #42affa;
+            --r-selection-background-color: #42affa;
+        }
+        
+        .reveal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .reveal h1 {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .emoji {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+            font-size: 1.2em;
+        }
+        
+        .reveal .slide-number {
+            background-color: rgba(0,0,0,0.4);
+            color: white;
+        }
+        
+        .reveal section {
+            text-align: left;
+            padding: 20px;
+        }
+        
+        .reveal section.center {
+            text-align: center;
+        }
+        
+        .reveal ul, .reveal ol {
+            display: block;
+            margin-left: 1em;
+        }
+        
+        .reveal li {
+            margin: 0.5em 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card h3 {
+            margin-top: 0;
+            color: #42affa;
+        }
+        
+        .highlight-box {
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid #42affa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .code-box {
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            margin: 20px 0;
+        }
+        
+        .architecture {
+            font-family: monospace;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 8px;
+            white-space: pre;
+            text-align: center;
+            font-size: 0.7em;
+            line-height: 1.4;
+        }
+        
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .big-number {
+            font-size: 4em;
+            font-weight: bold;
+            color: #42affa;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.8em;
+        }
+        
+        th, td {
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background: rgba(66, 175, 250, 0.3);
+            font-weight: bold;
+        }
+        
+        .fragment.highlight-current-blue.visible:not(.current-fragment) {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1><span class="emoji">🦞</span> OpenClaw</h1>
+                <h3>开源 AI 助手网关平台</h3>
+                <p style="margin-top: 2em; font-style: italic;">"EXFOLIATE! EXFOLIATE!" — A space lobster, probably</p>
+                <p style="margin-top: 1em; font-size: 0.8em; opacity: 0.8;">按 → 或空格键继续</p>
+            </section>
+            
+            <!-- Slide 2: What is OpenClaw -->
+            <section>
+                <h2><span class="emoji">🌟</span> 什么是 OpenClaw？</h2>
+                <div class="highlight-box">
+                    <p style="font-size: 1.2em;">
+                        OpenClaw 是一个<strong>自托管网关平台</strong>，将你最喜欢的聊天应用与 AI 编程助手连接起来
+                    </p>
+                </div>
+                <ul style="margin-top: 30px;">
+                    <li class="fragment">🏠 运行在你自己的机器上</li>
+                    <li class="fragment">📱 支持 WhatsApp、Telegram、Discord 等多个平台</li>
+                    <li class="fragment">🤖 随时随地，口袋里的 AI 助手</li>
+                    <li class="fragment">🔒 你的数据，你的控制</li>
+                </ul>
+            </section>
+            
+            <!-- Slide 3: Target Audience -->
+            <section>
+                <h2><span class="emoji">🎯</span> 适用人群</h2>
+                <div class="big-number">👨‍💻 👩‍💻</div>
+                <div class="columns">
+                    <div class="feature-card fragment">
+                        <h3>开发者</h3>
+                        <ul>
+                            <li>需要编程助手</li>
+                            <li>想要自动化工作流</li>
+                            <li>重视隐私和控制权</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3>高级用户</h3>
+                        <ul>
+                            <li>熟悉命令行操作</li>
+                            <li>希望定制化体验</li>
+                            <li>不依赖托管服务</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Slide 4: Core Features -->
+            <section>
+                <h2><span class="emoji">✨</span> 核心特点</h2>
+                <div class="feature-grid">
+                    <div class="feature-card fragment">
+                        <h3><span class="emoji">🏠</span> 自托管</h3>
+                        <p>运行在你的硬件上<br>由你制定规则</p>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3><span class="emoji">📱</span> 多渠道</h3>
+                        <p>一个 Gateway<br>同时服务多个平台</p>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3><span class="emoji">🤖</span> AI 原生</h3>
+                        <p>专为编程助手打造<br>支持工具使用</p>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3><span class="emoji">🔓</span> 开源</h3>
+                        <p>MIT 许可证<br>社区驱动</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Slide 5: System Requirements -->
+            <section>
+                <h2><span class="emoji">📋</span> 系统要求</h2>
+                <div class="highlight-box">
+                    <ul style="font-size: 1.3em; line-height: 2;">
+                        <li class="fragment"><strong>Node.js</strong> 22+</li>
+                        <li class="fragment"><strong>API 密钥</strong> (推荐 Anthropic)</li>
+                        <li class="fragment"><strong>安装时间</strong> 仅需 5 分钟</li>
+                    </ul>
+                </div>
+                <p class="fragment" style="text-align: center; margin-top: 50px; font-size: 1.5em;">
+                    <span class="emoji">⚡</span> 快速、简单、强大
+                </p>
+            </section>
+            
+            <!-- Slide 6: Architecture -->
+            <section>
+                <h2><span class="emoji">🏗️</span> 工作原理</h2>
+                <div class="architecture fragment">
+┌─────────────────────────────────────────┐
+│         Gateway (核心)                   │
+│  ┌───────────────────────────────────┐  │
+│  │  WebSocket API (18789)            │  │
+│  │  - 消息路由                        │  │
+│  │  - 会话管理                        │  │
+│  │  - 认证 & 配对                     │  │
+│  └───────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+       ↓              ↓              ↓
+  ┌─────────┐   ┌─────────┐   ┌─────────┐
+  │WhatsApp │   │Telegram │   │ Discord │
+  └─────────┘   └─────────┘   └─────────┘
+                </div>
+            </section>
+            
+            <!-- Slide 7: Key Components -->
+            <section>
+                <h2><span class="emoji">🔧</span> 关键组件</h2>
+                <div class="fragment">
+                    <h3>1. Gateway（守护进程）</h3>
+                    <ul>
+                        <li>维护所有通信渠道的连接</li>
+                        <li>提供类型化的 WebSocket API</li>
+                        <li>验证入站消息并管理事件流</li>
+                    </ul>
+                </div>
+                <div class="fragment" style="margin-top: 20px;">
+                    <h3>2. 客户端</h3>
+                    <ul>
+                        <li>macOS 应用 / CLI / Web 管理界面</li>
+                        <li>通过 WebSocket 连接</li>
+                    </ul>
+                </div>
+                <div class="fragment" style="margin-top: 20px;">
+                    <h3>3. 节点</h3>
+                    <ul>
+                        <li>macOS / iOS / Android 设备</li>
+                        <li>提供摄像头、屏幕录制、位置等功能</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Slide 8: Quick Start -->
+            <section>
+                <h2><span class="emoji">🚀</span> 快速开始</h2>
+                <div class="code-box fragment">
+                    <div style="margin-bottom: 20px;"><strong>1. 安装</strong></div>
+                    <code>npm install -g openclaw</code>
+                </div>
+                <div class="code-box fragment">
+                    <div style="margin-bottom: 20px;"><strong>2. 配置认证</strong></div>
+                    <code>export ANTHROPIC_API_KEY=sk-ant-...</code>
+                </div>
+                <div class="code-box fragment">
+                    <div style="margin-bottom: 20px;"><strong>3. 启动 Gateway</strong></div>
+                    <code>openclaw gateway</code>
+                </div>
+                <div class="code-box fragment">
+                    <div style="margin-bottom: 20px;"><strong>4. 访问控制面板</strong></div>
+                    <code>http://127.0.0.1:18789/</code>
+                </div>
+            </section>
+            
+            <!-- Slide 9: Supported Channels -->
+            <section>
+                <h2><span class="emoji">📡</span> 支持的聊天渠道</h2>
+                <div class="columns">
+                    <div>
+                        <h3>核心渠道（内置）</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li class="fragment">WhatsApp</li>
+                            <li class="fragment">Telegram</li>
+                            <li class="fragment">Discord</li>
+                            <li class="fragment">Slack</li>
+                            <li class="fragment">Signal</li>
+                            <li class="fragment">iMessage (BlueBubbles)</li>
+                            <li class="fragment">WebChat</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>插件渠道</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li class="fragment">Feishu/Lark</li>
+                            <li class="fragment">Google Chat</li>
+                            <li class="fragment">Mattermost</li>
+                            <li class="fragment">Microsoft Teams</li>
+                            <li class="fragment">LINE</li>
+                            <li class="fragment">Matrix</li>
+                            <li class="fragment">Twitch</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fragment" style="text-align: center; margin-top: 30px; font-size: 1.2em;">
+                    <strong>20+ 平台</strong>，持续增加中！
+                </p>
+            </section>
+            
+            <!-- Slide 10: Core Capabilities -->
+            <section>
+                <h2><span class="emoji">🛠️</span> 核心能力</h2>
+                <div class="feature-grid">
+                    <div class="feature-card fragment">
+                        <h3>1. 多会话管理</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>每个用户独立会话</li>
+                            <li>主会话 + 隔离子会话</li>
+                            <li>会话历史持久化</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3>2. 工具生态</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>GitHub 集成</li>
+                            <li>飞书集成</li>
+                            <li>Git 智能提交</li>
+                            <li>系统运维工具</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3>3. 记忆系统</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>长期记忆 (MEMORY.md)</li>
+                            <li>每日日志</li>
+                            <li>语义搜索</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3>4. 定时任务</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>一次性任务</li>
+                            <li>循环任务</li>
+                            <li>Cron 表达式</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Slide 11: Security -->
+            <section>
+                <h2><span class="emoji">🔒</span> 安全特性</h2>
+                <ul style="font-size: 1.1em; line-height: 1.8;">
+                    <li class="fragment">✅ 所有客户端需要设备身份验证</li>
+                    <li class="fragment">✅ 新设备需要配对批准</li>
+                    <li class="fragment">✅ 本地连接可自动批准（可配置）</li>
+                    <li class="fragment">✅ 支持令牌认证 (OPENCLAW_GATEWAY_TOKEN)</li>
+                    <li class="fragment">✅ 群组消息需要 @ 提及</li>
+                </ul>
+                <div class="fragment highlight-box" style="margin-top: 30px;">
+                    <p style="text-align: center; font-size: 1.2em;">
+                        <strong>你的数据，你的规则</strong>
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Slide 12: Use Cases -->
+            <section>
+                <h2><span class="emoji">🎨</span> 使用场景</h2>
+                <div style="font-size: 0.95em;">
+                    <div class="fragment" style="margin-bottom: 15px;">
+                        <h3>1. 个人 AI 助手</h3>
+                        <p>从口袋里发消息，随时获得 AI 响应</p>
+                    </div>
+                    <div class="fragment" style="margin-bottom: 15px;">
+                        <h3>2. 开发工作流自动化</h3>
+                        <p>创建 GitHub issues、提交代码、查看 CI 状态</p>
+                    </div>
+                    <div class="fragment" style="margin-bottom: 15px;">
+                        <h3>3. 团队协作</h3>
+                        <p>飞书文档协作、权限管理、知识库维护</p>
+                    </div>
+                    <div class="fragment" style="margin-bottom: 15px;">
+                        <h3>4. 智能家居与设备控制</h3>
+                        <p>通过节点控制摄像头、屏幕录制、位置追踪</p>
+                    </div>
+                    <div class="fragment">
+                        <h3>5. 定时提醒与监控</h3>
+                        <p>邮件检查、日历提醒、天气播报</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Slide 13: Best Practices -->
+            <section>
+                <h2><span class="emoji">💡</span> 最佳实践</h2>
+                <div class="columns">
+                    <div class="feature-card fragment">
+                        <h3>群聊使用</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>需要 @ 提及才响应</li>
+                            <li>配置 requireMention</li>
+                            <li>自定义提及模式</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card fragment">
+                        <h3>记忆管理</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>主会话加载长期记忆</li>
+                            <li>每天更新日志</li>
+                            <li>定期提炼重要内容</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card fragment" style="margin-top: 20px;">
+                    <h3>心跳检查</h3>
+                    <ul style="font-size: 0.85em;">
+                        <li>配置 HEARTBEAT.md 定义周期性任务</li>
+                        <li>批量检查：邮件 + 日历 + 通知</li>
+                        <li>精确定时用 cron，灵活批量用 heartbeat</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Slide 14: Resources -->
+            <section>
+                <h2><span class="emoji">🌐</span> 资源链接</h2>
+                <div class="highlight-box" style="font-size: 1.1em;">
+                    <ul style="line-height: 2;">
+                        <li><strong>官方文档</strong><br>
+                            <a href="https://docs.openclaw.ai/" target="_blank">docs.openclaw.ai</a>
+                        </li>
+                        <li><strong>GitHub 仓库</strong><br>
+                            <a href="https://github.com/openclaw/openclaw" target="_blank">github.com/openclaw/openclaw</a>
+                        </li>
+                        <li><strong>社区 Discord</strong><br>
+                            <a href="https://discord.com/invite/clawd" target="_blank">discord.com/invite/clawd</a>
+                        </li>
+                        <li><strong>技能市场</strong><br>
+                            <a href="https://clawhub.com" target="_blank">clawhub.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Slide 15: Final -->
+            <section class="center">
+                <h1><span class="emoji">🦞</span> OpenClaw</h1>
+                <h3>你的开源、自托管、多渠道<br>AI 助手网关</h3>
+                <div class="big-number" style="margin-top: 50px;">🚀</div>
+                <p style="font-size: 1.3em; margin-top: 30px;">
+                    Made with ❤️ by the OpenClaw community
+                </p>
+                <p style="margin-top: 50px; opacity: 0.8;">
+                    按 Esc 查看全部幻灯片 · 按 F 进入全屏模式
+                </p>
+            </section>
+            
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            center: false,
+            width: 1280,
+            height: 720,
+            margin: 0.04,
+            controls: true,
+            progress: true,
+            keyboard: true,
+            overview: true,
+            touch: true,
+            loop: false,
+            rtl: false,
+            fragments: true,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+        });
+    </script>
+</body>
+</html>
