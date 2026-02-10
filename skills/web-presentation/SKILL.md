@@ -28,10 +28,24 @@ Creates self-contained HTML presentations with:
 - **🎯 Vertical navigation** - Nested slides for hierarchical content
 - **⌨️ Keyboard shortcuts** - Full keyboard control including fullscreen mode
 - **📊 Progress tracking** - Visual progress bar and slide counter
-- **📱 Responsive design** - Works on desktop, tablet, and mobile
+- **📱 Responsive design** - Automatic scaling to fit any screen size (desktop, tablet, mobile)
 - **🔌 Plugin ecosystem** - Markdown, code highlighting, math equations, search
 - **🚀 Single-file output** - Everything via CDN, no build process required
 - **🛠️ Full API access** - Complete Reveal.js API for advanced customization
+
+### Responsive Design Features
+
+✨ **Smart Screen Adaptation**
+- **Automatic scaling** - Presentations automatically scale to fill available screen space while maintaining proper aspect ratio
+- **Viewport optimization** - Dynamic sizing based on window dimensions (16:9 aspect ratio)
+- **Mobile-friendly** - Optimal font sizes and layouts for devices of all sizes
+- **Margin management** - Configurable margins to ensure content stays readable on any screen
+- **Window resize handling** - Presentations reflow automatically when browser is resized
+
+🎯 **Configuration Options**
+- `minScale` / `maxScale` - Control minimum (20%) and maximum (200%) scaling ranges
+- `margin` - Set presentation margins (default 5%) to ensure breathing room
+- `width` / `height` - Use 100% to fill available space with responsive sizing
 
 ### Mode 2: Presentation Repository (Professional & Scalable)
 Manages multiple presentations with:

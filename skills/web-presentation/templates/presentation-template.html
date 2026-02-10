@@ -20,6 +20,69 @@
     
     <!-- Custom CSS (optional) -->
     <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <!-- 响应式设计样式 -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .reveal {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        .slide {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        /* 确保内容不会溢出 */
+        .reveal h1, 
+        .reveal h2, 
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+        
+        /* 响应式媒体查询 */
+        @media (max-width: 1024px) {
+            .reveal h1 {
+                font-size: 2.5em;
+            }
+            .reveal h2 {
+                font-size: 1.8em;
+            }
+            .reveal h3 {
+                font-size: 1.4em;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .reveal h1 {
+                font-size: 1.8em;
+            }
+            .reveal h2 {
+                font-size: 1.3em;
+            }
+            .reveal h3 {
+                font-size: 1em;
+            }
+            .reveal p,
+            .reveal li {
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="reveal">
@@ -93,6 +156,16 @@ function hello() {
             center: true,
             slideNumber: true,
             
+            // 响应式配置 - 确保幻灯片适应屏幕大小
+            width: '100%',
+            height: '100%',
+            margin: 0.05,  // 5% 边距
+            minScale: 0.2,  // 最小缩放 20%
+            maxScale: 2.0,  // 最大缩放 200%
+            
+            // 屏幕分辨率适应
+            embedded: true,
+            
             // 插件
             plugins: [ 
                 RevealMarkdown, 
@@ -100,6 +173,11 @@ function hello() {
                 RevealNotes,
                 RevealZoom
             ]
+        });
+        
+        // 监听窗口大小变化，动态调整
+        window.addEventListener('resize', () => {
+            Reveal.layout();
         });
     </script>
 </body>
