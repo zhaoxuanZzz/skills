@@ -366,6 +366,8 @@ Provide the HTML file with clear instructions:
 
 **File name:** `[topic]-presentation.html`
 
+**Output location:** Save the HTML file to the `docs/` directory in your project
+
 **Usage instructions:**
 ```
 🎯 打开方式：在任何现代浏览器中打开此 HTML 文件
